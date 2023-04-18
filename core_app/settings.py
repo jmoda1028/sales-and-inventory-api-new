@@ -12,17 +12,21 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 import os
 import sys
 import dj_database_url
+import environ
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+env = environ.Env()
+
+environ.Env.read_env()
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-bn^f4@uz6&zj0q8iop*e8j_@2s@ik3bp7)&n^2*8&#^54*qm=t'
+SECRET_KEY = env('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 # DEBUG = True
@@ -107,21 +111,9 @@ WSGI_APPLICATION = 'core_app.wsgi.application'
 #     }
 # }
 
-
-
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'railway',
-        'USER': 'postgres',
-        'PASSWORD': 'VU5paUSBcCujV9E9qo09',
-        'HOST': 'containers-us-west-207.railway.app',
-        'PORT': '7375',
-    }
+    'default': dj_database_url.parse(env('DATABASE_URL'))
 }
-
-DATABASES['default'] = dj_database_url.config()
-
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
