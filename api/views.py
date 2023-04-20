@@ -277,7 +277,7 @@ class CustomView(APIView):
 
     @api_view(['GET'])
     def get_users_role(request):
-        res = User.objects.order_by('-created_at').filter(role=1).values(
+        res = User.objects.order_by('-created_at').filter(role=2).values(
                'id','first_name','last_name','email','role__name','created_at','updated_at', 'is_active')
         data = list(res)
         return Response(data)
